@@ -1,0 +1,100 @@
+<div class="container-fluid w-50 m-auto">
+  <h2>Registration Form</h2>
+  <form [formGroup]="registrationForm">
+
+
+
+    <div class="row">
+      <div class="form-group col-6">
+
+        <label>First Name <span class="text-danger">*</span></label>
+        <input [class.is-invalid]="fname.invalid 
+          && fname.touched" formControlName="fname" type="text" class="form-control">
+        <div *ngIf="fname!.invalid 
+  && fname!.touched">
+          <small class="text-danger" *ngIf="fname!.errors?.required">First name is required</small>
+          <small class="text-danger" *ngIf="fname!.errors?.minlength">First name must be at least 3 characters</small>
+        </div>
+
+      </div>
+
+
+
+      <div class="form-group col-6">
+        <label>Last Name <span class="text-danger">*</span></label>
+        <input [class.is-invalid]="lname.invalid 
+            && lname.touched" formControlName="lname" type="text" class="form-control">
+        <div *ngIf="lname!.invalid && lname!.touched">
+          <small class="text-danger" *ngIf="lname!.errors?.required">Last name is required</small>
+          <small class="text-danger" *ngIf="lname!.errors?.minlength">Last name must be at least 3 characters</small>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label>Email <span class="text-danger">*</span></label>
+      <input type="text" (blur)="checkEmail(email.value)" formControlName="email" class="form-control"
+        [class.is-invalid]="email.invalid && email.touched || valid">
+
+      <div *ngIf="email.errors && (email.invalid && email.touched)">
+        <small class="text-danger" *ngIf="email.errors.required">E-Mail is required</small>
+        <small class="text-danger" *ngIf="email.errors.email">Please enter a valid E-Mail Address</small>
+
+      </div>
+      <small class="text-danger is-invalid" *ngIf="email.touched && valid">Email Id already exists</small>
+
+    </div>
+
+
+    <div class="form-group">
+        <label>Phone <span class="text-danger">*</span></label>
+        <input formControlName="phone" type="text"
+          class="form-control" [class.is-invalid]="phone.invalid && phone.touched">
+      </div>
+      <div *ngIf="phone.errors && (phone.invalid && phone.touched)">
+        <small class="text-danger" *ngIf="phone.errors.required">Phone number is required</small>
+        <small class="text-danger" *ngIf="phone.errors.minlength">Phone number must be 11 digits</small>
+      </div>
+
+
+
+    <div class="form-group">
+      <label>Password <span class="text-danger">*</span></label>
+      <input minlength="8" maxlength="12" (focus)="onFocus()" formControlName="password" type="password"
+        class="form-control" [class.is-invalid]="password.invalid && password.touched">
+    </div>
+    <div *ngIf="password.errors && (password.invalid || password.touched)">
+      <small class="text-danger" *ngIf="password.errors.required && password.touched">Password is required</small>
+    </div>
+    <div *ngIf="focus && password.errors">
+      <small class="text-danger" *ngIf="focus || password.errors.pattern">Password must be 8-12 characters
+        long</small><br>
+      <small class="text-danger" *ngIf="focus || password.errors.pattern">Password must have at least one capital
+        letter</small><br>
+      <small class="text-danger" *ngIf="focus || password.errors.pattern">Password must have at least one digit from [0
+        to 9]</small><br>
+      <small class="text-danger" *ngIf="focus || password.errors.pattern">Password must have at least one special
+        character from [!,@,#,\,$,%,\,^,&,\,*]</small><br>
+    </div>
+
+
+
+    <div class="form-group">
+      <label>Confirm Password <span class="text-danger">*</span></label>
+      <input [class.is-invalid]="registrationForm.errors?.misMatch" formControlName="confirmPassword" type="password"
+        class="form-control">
+      <small class="text-danger" *ngIf="registrationForm.errors?.misMatch">passwords do not match</small>
+    </div>
+
+    <div class="form-group">
+        <label>Date of Birth <span class="text-danger">*</span></label>
+<input formControlName="dob" (blur)="checkDob(dob.value)" type="date" class="form-control">
+
+</div>
+
+
+    <button [routerLink]="['login']" [disabled]="!registrationForm.valid || valid" (click)="submit(registrationForm)"
+      class="btn btn-primary" type="submit">Register</button>
+  </form>
+</div>
